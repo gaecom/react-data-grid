@@ -68,7 +68,9 @@ class Viewport extends React.Component {
     onCellRangeSelectionCompleted: PropTypes.func,
     onCommit: PropTypes.func.isRequired,
     RowsContainer: PropTypes.node,
-    editorPortalTarget: PropTypes.instanceOf(Element).isRequired
+    editorPortalTarget: PropTypes.instanceOf(Element).isRequired,
+    enableInsertRow: PropTypes.bool,
+    onInsertRow: PropTypes.func,
   };
 
   static defaultProps = {
@@ -265,6 +267,7 @@ class Viewport extends React.Component {
           rowKey={this.props.rowKey}
           totalWidth={this.props.totalWidth}
           width={this.props.columnMetrics.width}
+          minColumnWidth={this.props.columnMetrics.minColumnWidth}
           totalColumnWidth={this.props.columnMetrics.totalColumnWidth}
           rowGetter={this.props.rowGetter}
           rowsCount={this.props.rowsCount}
@@ -311,6 +314,8 @@ class Viewport extends React.Component {
           prevScrollLeft={this.state.prevScrollLeft}
           prevScrollTop={this.state.prevScrollTop}
           editorPortalTarget={this.props.editorPortalTarget}
+          enableInsertRow={this.props.enableInsertRow}
+          onInsertRow={this.props.onInsertRow}
         />
       </div>
     );

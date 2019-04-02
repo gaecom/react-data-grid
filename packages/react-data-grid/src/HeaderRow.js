@@ -1,6 +1,7 @@
 import React from 'react';
 import shallowEqual from 'shallowequal';
 import BaseHeaderCell from './HeaderCell';
+import InsertColumn from './InsertColumn';
 import getScrollbarSize from './getScrollbarSize';
 import { getColumn, getSize, isFrozen } from './ColumnUtils';
 import SortableHeaderCell from 'common/cells/headerCells/SortableHeaderCell';
@@ -27,6 +28,7 @@ class HeaderRow extends React.Component {
 
   static propTypes = {
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    minColumnWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     height: PropTypes.number.isRequired,
     columns: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
     onColumnResize: PropTypes.func,
@@ -43,7 +45,9 @@ class HeaderRow extends React.Component {
     onScroll: PropTypes.func,
     rowType: PropTypes.string,
     draggableHeaderCell: PropTypes.func,
-    onHeaderDrop: PropTypes.func
+    onHeaderDrop: PropTypes.func,
+    enableInsertColumn: PropTypes.bool,
+    onInsertColumn: PropTypes.func,
   };
 
   cells = [];
@@ -107,6 +111,20 @@ class HeaderRow extends React.Component {
     };
   };
 
+  getInsertColumnStyle = () => {
+    let lastColumn = this.props.columns[this.props.columns.length - 1]
+    let left = lastColumn.left + lastColumn.width;
+    return {
+      position: 'absolute',
+      left : left,
+      height: this.props.height,
+      width: this.props.minColumnWidth,
+      display: 'inine-block',
+      fontSize: '24px',
+      textAlign: 'center'
+    }
+  }
+
   getCells = () => {
     const cells = [];
     const frozenCells = [];
@@ -160,7 +178,7 @@ class HeaderRow extends React.Component {
 
   render() {
     const cellsStyle = {
-      width: this.props.width ? (this.props.width + getScrollbarSize()) : '100%',
+      width: this.props.width ? (this.props.width + getScrollbarSize() + 200) : '100%',
       height: this.props.height,
       whiteSpace: 'nowrap',
       overflowX: 'hidden',
@@ -172,6 +190,13 @@ class HeaderRow extends React.Component {
       <div {...this.getKnownDivProps()} className="react-grid-HeaderRow">
         <div style={cellsStyle}>
           {cells}
+          {this.props.enableInsertColumn && (
+            <InsertColumn
+              className="react-grid-insert-column"
+              style={this.getInsertColumnStyle()}
+              onInsertColumn={this.props.onInsertColumn}
+            />
+          )}
         </div>
       </div>
     );

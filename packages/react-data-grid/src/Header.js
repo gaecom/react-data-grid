@@ -30,7 +30,9 @@ class Header extends React.Component {
     onHeaderDrop: PropTypes.func,
     draggableHeaderCell: PropTypes.func,
     getValidFilterValues: PropTypes.func,
-    cellMetaData: PropTypes.shape(cellMetaDataShape)
+    cellMetaData: PropTypes.shape(cellMetaDataShape),
+    enableInsertColumn: PropTypes.bool,
+    onInsertColumn: PropTypes.func,
   };
 
   state = { resizing: null };
@@ -114,6 +116,7 @@ class Header extends React.Component {
           onColumnResize={this.onColumnResize}
           onColumnResizeEnd={this.onColumnResizeEnd}
           width={columnMetrics.width}
+          minColumnWidth={columnMetrics.minColumnWidth}
           height={row.height || this.props.height}
           columns={columnMetrics.columns}
           resizing={resizeColumn}
@@ -126,6 +129,8 @@ class Header extends React.Component {
           onSort={this.props.onSort}
           onScroll={this.props.onScroll}
           getValidFilterValues={this.props.getValidFilterValues}
+          enableInsertColumn={this.props.enableInsertColumn}
+          onInsertColumn={this.props.onInsertColumn}
         />
       );
     });
