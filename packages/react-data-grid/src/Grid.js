@@ -72,7 +72,11 @@ class Grid extends React.Component {
     onScroll: PropTypes.func,
     scrollLeft: PropTypes.number,
     RowsContainer: PropTypes.node,
-    editorPortalTarget: PropTypes.instanceOf(Element).isRequired
+    editorPortalTarget: PropTypes.instanceOf(Element).isRequired,
+    enableInsertColumn: PropTypes.bool,
+    onInsertColumn: PropTypes.func,
+    enableInsertRow: PropTypes.bool,
+    onInsertRow: PropTypes.func,
   };
 
   static defaultProps = {
@@ -162,6 +166,8 @@ class Grid extends React.Component {
           onHeaderDrop={this.props.onHeaderDrop}
           getValidFilterValues={this.props.getValidFilterValues}
           cellMetaData={this.props.cellMetaData}
+          enableInsertColumn={this.props.enableInsertColumn}
+          onInsertColumn={this.props.onInsertColumn}
           />
           {this.props.rowsCount >= 1 || (this.props.rowsCount === 0 && !this.props.emptyRowsView) ?
             <div
@@ -210,6 +216,8 @@ class Grid extends React.Component {
                   onCommit={this.props.onCommit}
                   RowsContainer={this.props.RowsContainer}
                   editorPortalTarget={this.props.editorPortalTarget}
+                  enableInsertRow={this.props.enableInsertRow}
+                  onInsertRow={this.props.onInsertRow}
                 />
             </div>
         :

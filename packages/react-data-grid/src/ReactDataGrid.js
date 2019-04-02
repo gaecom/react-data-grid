@@ -218,7 +218,15 @@ class ReactDataGrid extends React.Component {
     /** Called when the grid is scrolled */
     onScroll: PropTypes.func,
     /** The node where the editor portal should mount. */
-    editorPortalTarget: PropTypes.instanceOf(Element)
+    editorPortalTarget: PropTypes.instanceOf(Element),
+    /** Enable to show insert column icon for user. */
+    enableInsertColumn: PropTypes.bool,
+    /** Called when click insert column icon. */
+    onInsertColumn: PropTypes.func,
+    /** Enable to show insert row icon for user. */
+    enableInsertRow: PropTypes.bool,
+    /** Called when click insert icon. */
+    onInsertRow: PropTypes.func,
   };
 
   static defaultProps = {
@@ -869,6 +877,10 @@ class ReactDataGrid extends React.Component {
             onCommit={this.onCommit}
             onScroll={this.onScroll}
             editorPortalTarget={this.props.editorPortalTarget}
+            enableInsertColumn={this.props.enableInsertColumn}
+            onInsertColumn={this.props.onInsertColumn}
+            enableInsertRow={this.props.enableInsertRow}
+            onInsertRow={this.props.onInsertRow}
           />
         </div>
       </div>

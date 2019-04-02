@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Row from './Row';
+import InsertRow from './InsertRow';
 import DefaultRowsContainer from './RowsContainer';
 import cellMetaDataShape from 'common/prop-shapes/CellActionShape';
 import * as rowUtils from './RowUtils';
@@ -20,6 +21,7 @@ class Canvas extends React.PureComponent {
     rowHeight: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     width: PropTypes.number,
+    minColumnWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.stirng]),
     totalWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     style: PropTypes.string,
     className: PropTypes.string,
@@ -78,7 +80,9 @@ class Canvas extends React.PureComponent {
     onCellRangeSelectionUpdated: PropTypes.func,
     onCellRangeSelectionCompleted: PropTypes.func,
     onCommit: PropTypes.func.isRequired,
-    editorPortalTarget: PropTypes.instanceOf(Element).isRequired
+    editorPortalTarget: PropTypes.instanceOf(Element).isRequired,
+    enableInsertRow: PropTypes.bool,
+    onInsertRow: PropTypes.func,
   };
 
   static defaultProps = {
@@ -337,6 +341,12 @@ class Canvas extends React.PureComponent {
     );
   };
 
+  onInsertRow = () => {
+    if (this.props.onInsertRow) {
+      this.props.onInsertRow();
+    }
+  }
+
   render() {
     const { rowOverscanStartIdx, rowOverscanEndIdx, cellMetaData, columns, colOverscanStartIdx, colOverscanEndIdx, colVisibleStartIdx, colVisibleEndIdx, lastFrozenColumnIndex, expandedRows, rowHeight, rowsCount, totalColumnWidth, totalWidth, height, rowGetter, RowsContainer, contextMenu } = this.props;
 
@@ -387,6 +397,8 @@ class Canvas extends React.PureComponent {
       height
     };
 
+    let insertRowIconWidth = this.props.columns[0].key === 'select-row' ? 60 : this.props.minColumnWidth;
+
     return (
       <div
         ref={this.setCanvasRef}
@@ -433,7 +445,15 @@ class Canvas extends React.PureComponent {
           editorPortalTarget={this.props.editorPortalTarget}
         />
         <RowsContainer id={contextMenu ? contextMenu.props.id : 'rowsContainer'}>
-          <div style={{ width: totalColumnWidth }}>{rows}</div>
+          <div style={{ width: totalColumnWidth +  200}}>{rows}</div>
+          {this.props.enableInsertRow && (
+            <InsertRow
+              width={this.props.totalColumnWidth}
+              iconWidth={insertRowIconWidth}
+              height={this.props.rowHeight}
+              onInsertRow={this.props.onInsertRow}
+            />
+          )}
         </RowsContainer>
       </div>
     );

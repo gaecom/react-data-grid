@@ -163,7 +163,10 @@ class Example extends React.Component {
       }
     ];
 
-    this.state = { rows: this.createRows(2000) };
+    this.state = {
+      columns: this._columns,
+      rows: this.createRows(20)
+    };
   }
 
   createRows = (numberOfRows) => {
@@ -195,7 +198,7 @@ class Example extends React.Component {
   };
 
   getColumns = () => {
-    let clonedColumns = this._columns.slice();
+    let clonedColumns = this.state.columns.slice();
     clonedColumns[2].events = {
       onClick: (ev, args) => {
         const idx = args.idx;
@@ -244,20 +247,49 @@ class Example extends React.Component {
     return this.state.rows.length;
   };
 
+  onInsertRow = () => {
+    let rowsCount = this.getSize();
+    this.handleAddRow(rowsCount);
+  }
+
+  onInsertColumn = () => {
+    var name = window.prompt('Place enter a column name', '');
+    if (!name || name.trim() === '') {
+      return;
+    }
+    let newColumn = {
+      key: name,
+      name: name,
+      editable: true,
+      width: 200,
+      resizable: true
+    };
+    let columns = this.state.columns.slice();
+    columns.push(newColumn);
+    this.setState({columns: columns});
+  }
+
   render() {
+    let columns = this.getColumns();
     return (
       <ReactDataGrid
         ref={ node => this.grid = node }
         enableCellSelect={true}
-        columns={this.getColumns()}
+        columns={columns}
         rowGetter={this.getRowAt}
         rowsCount={this.getSize()}
         onGridRowsUpdated={this.handleGridRowsUpdated}
-        toolbar={<Toolbar onAddRow={this.handleAddRow}/>}
+        // toolbar={<Toolbar onAddRow={this.handleAddRow}/>}
         enableRowSelect={true}
         rowHeight={50}
         minHeight={600}
-        rowScrollTimeout={200} />);
+        rowScrollTimeout={200}
+        enableInsertColumn={true}
+        enableInsertRow={true}
+        onInsertRow={this.onInsertRow}
+        onInsertColumn={this.onInsertColumn}
+      />
+    );
   }
 }
 
