@@ -33,6 +33,7 @@ class Header extends React.Component {
     cellMetaData: PropTypes.shape(cellMetaDataShape),
     enableInsertColumn: PropTypes.bool,
     onInsertColumn: PropTypes.func,
+    headerContextMenu: PropTypes.element,
   };
 
   state = { resizing: null };
@@ -131,6 +132,7 @@ class Header extends React.Component {
           getValidFilterValues={this.props.getValidFilterValues}
           enableInsertColumn={this.props.enableInsertColumn}
           onInsertColumn={this.props.onInsertColumn}
+          headerContextMenu={this.props.headerContextMenu}
         />
       );
     });

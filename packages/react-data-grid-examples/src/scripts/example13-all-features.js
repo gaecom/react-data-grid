@@ -6,6 +6,9 @@ const { Editors, Toolbar, Formatters } = require('react-data-grid-addons');
 import update from 'immutability-helper';
 const { AutoComplete: AutoCompleteEditor, DropDownEditor } = Editors;
 const { ImageFormatter } = Formatters;
+const { Menu: { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } } = require('react-data-grid-addons');
+
+import PropTypes from 'prop-types';
 
 faker.locale = 'en_GB';
 
@@ -59,8 +62,8 @@ class Example extends React.Component {
     super(props, context);
     this._columns = [
       {
-        key: 'id',
-        name: 'ID',
+        key: 'name',
+        name: 'Name',
         width: 80,
         resizable: true
       },
@@ -179,7 +182,7 @@ class Example extends React.Component {
 
   createFakeRowObjectData = (index) => {
     return {
-      id: 'id_' + index,
+      name: index,
       avartar: faker.image.avatar(),
       county: faker.address.county(),
       email: faker.internet.email(),
@@ -269,8 +272,20 @@ class Example extends React.Component {
     this.setState({columns: columns});
   }
 
+  onColumnDelete = (e, data) => {
+    let column = data.column;
+    let key = column.key;
+    let columns = this.state.columns.filter(item => item.key !== key);
+    this.setState({
+      columns: columns
+    });
+  }
+
   render() {
     let columns = this.getColumns();
+
+    let headerContextMenu = <HeaderContextMenu id={'header-context-menu'} onColumnDelete={this.onColumnDelete} />
+
     return (
       <ReactDataGrid
         ref={ node => this.grid = node }
@@ -288,6 +303,7 @@ class Example extends React.Component {
         enableInsertRow={true}
         onInsertRow={this.onInsertRow}
         onInsertColumn={this.onInsertColumn}
+        headerContextMenu={headerContextMenu}
       />
     );
   }
@@ -300,3 +316,30 @@ module.exports = exampleWrapper({
   examplePath: './scripts/example13-all-features.js',
   examplePlaygroundLink: undefined
 });
+
+class HeaderContextMenu extends React.Component {
+
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    column: PropTypes.object,
+    onColumnRename: PropTypes.func,
+  }
+
+  onColumnDelete = (e, data) => {
+    if (typeof(this.props.onColumnDelete) === 'function') {
+      this.props.onColumnDelete(e, data);
+    }
+  }
+
+  render() {
+    let { id, column } = this.props;
+
+    return (
+      <ContextMenu id={id}>
+        <MenuItem data={{ column }} onClick={this.onColumnDelete}>Delete</MenuItem>
+      </ContextMenu>
+    );
+  }
+}
+
+export default HeaderContextMenu;

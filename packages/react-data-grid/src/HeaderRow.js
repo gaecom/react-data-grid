@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { isValidElement, cloneElement } from 'react';
 import shallowEqual from 'shallowequal';
 import BaseHeaderCell from './HeaderCell';
 import InsertColumn from './InsertColumn';
@@ -6,6 +6,7 @@ import getScrollbarSize from './getScrollbarSize';
 import { getColumn, getSize, isFrozen } from './ColumnUtils';
 import SortableHeaderCell from 'common/cells/headerCells/SortableHeaderCell';
 import FilterableHeaderCell from 'common/cells/headerCells/FilterableHeaderCell';
+import SimpleHeaderCell from './SimpleHeaderCell';
 import HeaderCellType from './HeaderCellType';
 import createObjectWithProperties from './createObjectWithProperties';
 import { HeaderRowType } from 'common/constants';
@@ -48,19 +49,25 @@ class HeaderRow extends React.Component {
     onHeaderDrop: PropTypes.func,
     enableInsertColumn: PropTypes.bool,
     onInsertColumn: PropTypes.func,
+    headerContextMenu: PropTypes.element,
   };
+
+  state = {
+    column: null
+  }
 
   cells = [];
 
   shouldComponentUpdate(nextProps) {
-    return (
-      nextProps.width !== this.props.width
-      || nextProps.height !== this.props.height
-      || nextProps.columns !== this.props.columns
-      || !shallowEqual(nextProps.style, this.props.style)
-      || this.props.sortColumn !== nextProps.sortColumn
-      || this.props.sortDirection !== nextProps.sortDirection
-    );
+    // return (
+    //   nextProps.width !== this.props.width
+    //   || nextProps.height !== this.props.height
+    //   || nextProps.columns !== this.props.columns
+    //   || !shallowEqual(nextProps.style, this.props.style)
+    //   || this.props.sortColumn !== nextProps.sortColumn
+    //   || this.props.sortDirection !== nextProps.sortDirection
+    // );
+    return true;
   }
 
   getHeaderCellType = (column) => {
@@ -87,6 +94,10 @@ class HeaderRow extends React.Component {
     return <SortableHeaderCell columnKey={column.key} onSort={this.props.onSort} sortDirection={sortDirection} sortDescendingFirst={sortDescendingFirst} headerRenderer={column.headerRenderer} />;
   };
 
+  getSimpleHeaderCell = (column) => {
+    return (<SimpleHeaderCell headerContextMenu={this.props.headerContextMenu} columnKey={column.key} column={column} onHeaderCellClick={this.onHeaderCellClick} onHeaderContextMenu={this.onHeaderContextMenu} />);
+  }
+
   getHeaderRenderer = (column) => {
     if (column.headerRenderer && !column.sortable && !this.props.filterable) {
       return column.headerRenderer;
@@ -98,7 +109,7 @@ class HeaderRow extends React.Component {
     case HeaderCellType.FILTERABLE:
       return this.getFilterableHeaderCell(column);
     default:
-      return undefined;
+      return this.getSimpleHeaderCell(column);
     }
   };
 
@@ -176,6 +187,14 @@ class HeaderRow extends React.Component {
     return createObjectWithProperties(this.props, knownDivPropertyKeys);
   };
 
+  onHeaderCellClick = (column) => {
+    // todo
+  }
+
+  onHeaderContextMenu = (column) => {
+    this.setState({column: column});
+  }
+
   render() {
     const cellsStyle = {
       width: this.props.width ? (this.props.width + getScrollbarSize() + 200) : '100%',
@@ -186,6 +205,10 @@ class HeaderRow extends React.Component {
     };
 
     const cells = this.getCells();
+    let headerContextMenu = this.props.headerContextMenu;
+
+    let column = this.state.column;
+
     return (
       <div {...this.getKnownDivProps()} className="react-grid-HeaderRow">
         <div style={cellsStyle}>
@@ -198,6 +221,7 @@ class HeaderRow extends React.Component {
             />
           )}
         </div>
+        {isValidElement(headerContextMenu) && cloneElement(headerContextMenu, { column })}
       </div>
     );
   }
