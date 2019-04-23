@@ -281,10 +281,18 @@ class Example extends React.Component {
     });
   }
 
+  onRowDelete = (e, data) => {
+    let { rowIdx } = data;
+    let newRows = this.state.rows.slice(0); // copy array;
+    newRows.splice(rowIdx, 1);
+    this.setState({rows: newRows});
+  }
+
   render() {
     let columns = this.getColumns();
 
     let headerContextMenu = <HeaderContextMenu id={'header-context-menu'} onColumnDelete={this.onColumnDelete} />
+    let bodyContextMenu = <BodyContextMenu id={'body-context-menu'} onRowDelete={this.onRowDelete}/>
 
     return (
       <ReactDataGrid
@@ -304,6 +312,8 @@ class Example extends React.Component {
         onInsertRow={this.onInsertRow}
         onInsertColumn={this.onInsertColumn}
         headerContextMenu={headerContextMenu}
+        contextMenu={bodyContextMenu}
+        RowsContainer={ContextMenuTrigger}
       />
     );
   }
@@ -342,4 +352,27 @@ class HeaderContextMenu extends React.Component {
   }
 }
 
-export default HeaderContextMenu;
+class BodyContextMenu extends React.Component {
+  static propTypes = {
+    onRowDelete: PropTypes.func.isRequired,
+    rowIdx: PropTypes.string.isRequired,
+    idx: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  };
+
+  onRowDelete = (e, data) => {
+    if (typeof(this.props.onRowDelete) === 'function') {
+      this.props.onRowDelete(e, data);
+    }
+  };
+
+  render() {
+    const { idx, id, rowIdx } = this.props;
+
+    return (
+      <ContextMenu id={id}>
+        <MenuItem data={{ rowIdx, idx }} onClick={this.onRowDelete}>Delete Row</MenuItem>
+      </ContextMenu>
+    );
+  }
+}
