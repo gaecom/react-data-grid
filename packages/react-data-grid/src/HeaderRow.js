@@ -4,6 +4,7 @@ import BaseHeaderCell from './HeaderCell';
 import InsertColumn from './InsertColumn';
 import getScrollbarSize from './getScrollbarSize';
 import { getColumn, getSize, isFrozen } from './ColumnUtils';
+import { EventTypes } from 'common/constants';
 import SortableHeaderCell from 'common/cells/headerCells/SortableHeaderCell';
 import FilterableHeaderCell from 'common/cells/headerCells/FilterableHeaderCell';
 import SimpleHeaderCell from './SimpleHeaderCell';
@@ -47,6 +48,7 @@ class HeaderRow extends React.Component {
     rowType: PropTypes.string,
     draggableHeaderCell: PropTypes.func,
     onHeaderDrop: PropTypes.func,
+    eventBus: PropTypes.object.isRequired,
     enableInsertColumn: PropTypes.bool,
     onInsertColumn: PropTypes.func,
     headerContextMenu: PropTypes.element,
@@ -188,7 +190,7 @@ class HeaderRow extends React.Component {
   };
 
   onHeaderCellClick = (column) => {
-    // todo
+    this.props.eventBus.dispatch(EventTypes.SELECT_COLUMN, { column }, null);
   }
 
   onHeaderContextMenu = (column) => {

@@ -31,6 +31,7 @@ class Header extends React.Component {
     draggableHeaderCell: PropTypes.func,
     getValidFilterValues: PropTypes.func,
     cellMetaData: PropTypes.shape(cellMetaDataShape),
+    eventBus: PropTypes.object.isRequired,
     enableInsertColumn: PropTypes.bool,
     onInsertColumn: PropTypes.func,
     headerContextMenu: PropTypes.element,
@@ -130,9 +131,10 @@ class Header extends React.Component {
           onSort={this.props.onSort}
           onScroll={this.props.onScroll}
           getValidFilterValues={this.props.getValidFilterValues}
+          eventBus={this.props.eventBus}
+          headerContextMenu={this.props.headerContextMenu}
           enableInsertColumn={this.props.enableInsertColumn}
           onInsertColumn={this.props.onInsertColumn}
-          headerContextMenu={this.props.headerContextMenu}
         />
       );
     });

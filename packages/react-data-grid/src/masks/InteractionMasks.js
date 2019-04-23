@@ -122,6 +122,7 @@ class InteractionMasks extends React.Component {
   componentDidMount() {
     const { eventBus, enableCellAutoFocus } = this.props;
     this.unsubscribeSelectCell = eventBus.subscribe(EventTypes.SELECT_CELL, this.selectCell);
+    this.unsubscribeSelectColumn = eventBus.subscribe(EventTypes.SELECT_COLUMN, this.selectColumn);
     this.unsubscribeSelectStart = eventBus.subscribe(EventTypes.SELECT_START, this.onSelectCellRangeStarted);
     this.unsubscribeSelectUpdate = eventBus.subscribe(EventTypes.SELECT_UPDATE, this.onSelectCellRangeUpdated);
     this.unsubscribeSelectEnd = eventBus.subscribe(EventTypes.SELECT_END, this.onSelectCellRangeEnded);
@@ -134,6 +135,7 @@ class InteractionMasks extends React.Component {
 
   componentWillUnmount() {
     this.unsubscribeSelectCell();
+    this.unsubscribeSelectColumn();
     this.unsubscribeSelectStart();
     this.unsubscribeSelectUpdate();
     this.unsubscribeSelectEnd();
@@ -491,6 +493,27 @@ class InteractionMasks extends React.Component {
       return prevState;
     }, callback);
   };
+
+  selectColumn = (column) => {
+    let columns = this.props.columns;
+    let selectColumnIndex = 0;
+    for (let i = 0; i < columns.length; i++) {
+      if (column.column.key === columns[i].key) {
+        selectColumnIndex = i;
+        break;
+      }
+    }
+
+    let rowsCount = this.props.rowsCount;
+
+    this.setState({selectedRange: {
+      selectedPosition: {idx : selectColumnIndex, rowIdx: 0},
+      startCell: {idx : selectColumnIndex, rowIdx: 0},
+      topLeft: {idx: selectColumnIndex, rowIdx: 0},
+      bottomRight: {idx: selectColumnIndex, rowIdx: rowsCount - 1},
+      isDragging: false,
+    }});
+  }
 
   createSingleCellSelectedRange(cellPosition, isDragging) {
     return {
