@@ -71,3 +71,7 @@
 .rdg-scrolling {
   pointer-events: none;
 }
+
+.react-grid-row-add:hover {
+  background-color: #f9f9f9;
+}
