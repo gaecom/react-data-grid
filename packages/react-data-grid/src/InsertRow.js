@@ -21,27 +21,36 @@ class InsertRow extends React.Component {
 
   render() {
 
-    const className = joinClasses('react-grid-row');
+    const className = joinClasses('react-grid-row', 'react-grid-row-add');
 
     let style = {
       width: this.props.width,
       height: this.props.height,
       overflow: 'hidden',
+      display: 'flex',
     };
 
     let iconStyle = {
       width: this.props.iconWidth,
       height: this.props.height,
       fontSize: '24px',
-      textAlign: 'center',
-      display: 'table-cell',
-      verticalAlign: 'middle'
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRight: '1px solid #ddd',
+      borderBottom: '1px solid #ddd',
     };
+
+    let itemSytle = {
+      flex: '1',
+      borderRight: '1px solid #ddd',
+      borderBottom: '1px solid #ddd',
+    }
 
     return (
       <div className={className} style={style} onClick={this.onInsertRow}>
         <div className="react-grid-add-row-icon" style={iconStyle} title="Add Row">+</div>
-        <div className="react-grid-add-row-item"></div>
+        <div className="react-grid-add-row-item" style={itemSytle}></div>
       </div>
     );
   }

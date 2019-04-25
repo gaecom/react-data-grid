@@ -28,12 +28,7 @@ class NumberEditor extends React.Component {
   }
 
   onKeyDown = (event) => {
-    let keyCode = event.keyCode;
-    if ((keyCode <= 57 && keyCode >= 48) || (keyCode <= 105 && keyCode >= 96) || (keyCode == 8)){
-      return true;
-     } else {
-      return false;
-     }
+
   }
 
   getValue = () => {
@@ -59,7 +54,7 @@ class NumberEditor extends React.Component {
     return (
       <input
         ref={this.setInputRef}
-        type="text"
+        type="number"
         className="form-control"
         value={this.state.value}
         onBlur={this.props.onBlur}
