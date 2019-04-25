@@ -50,6 +50,7 @@ class Grid extends React.Component {
     rowScrollTimeout: PropTypes.number,
     scrollToRowIndex: PropTypes.number,
     contextMenu: PropTypes.element,
+    headerContextMenu: PropTypes.element,
     getSubRowDetails: PropTypes.func,
     draggableHeaderCell: PropTypes.func,
     getValidFilterValues: PropTypes.func,
@@ -168,6 +169,8 @@ class Grid extends React.Component {
           cellMetaData={this.props.cellMetaData}
           enableInsertColumn={this.props.enableInsertColumn}
           onInsertColumn={this.props.onInsertColumn}
+          eventBus={this.props.eventBus}
+          headerContextMenu={this.props.headerContextMenu}
           />
           {this.props.rowsCount >= 1 || (this.props.rowsCount === 0 && !this.props.emptyRowsView) ?
             <div

@@ -137,6 +137,8 @@ class ReactDataGrid extends React.Component {
     /** Component used to render a context menu. react-data-grid-addons provides a default context menu which may be used*/
     contextMenu: PropTypes.element,
     /** */
+    headerContextMenu: PropTypes.element,
+    /** */
     cellNavigationMode: PropTypes.oneOf(['none', 'loopOverRow', 'changeRow']),
     /** Function called whenever a cell is selected */
     onCellSelected: PropTypes.func,
@@ -860,6 +862,7 @@ class ReactDataGrid extends React.Component {
             rowScrollTimeout={this.props.rowScrollTimeout}
             scrollToRowIndex={this.props.scrollToRowIndex}
             contextMenu={this.props.contextMenu}
+            headerContextMenu={this.props.headerContextMenu}
             overScan={this.props.overScan}
             enableCellSelect={this.props.enableCellSelect}
             enableCellAutoFocus={this.props.enableCellAutoFocus}

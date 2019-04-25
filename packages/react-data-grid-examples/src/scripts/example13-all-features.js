@@ -4,8 +4,11 @@ const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 const { Editors, Toolbar, Formatters } = require('react-data-grid-addons');
 import update from 'immutability-helper';
-const { AutoComplete: AutoCompleteEditor, DropDownEditor } = Editors;
+const { AutoComplete: AutoCompleteEditor, DropDownEditor, NumberEditor } = Editors;
 const { ImageFormatter } = Formatters;
+const { Menu: { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } } = require('react-data-grid-addons');
+
+import PropTypes from 'prop-types';
 
 faker.locale = 'en_GB';
 
@@ -54,119 +57,153 @@ const counties = [
 
 const titles = ['Dr.', 'Mr.', 'Mrs.', 'Miss', 'Ms.'];
 
+const defaultColumns = [
+  {
+    key: 'name',
+    name: 'Name',
+    width: 80,
+    resizable: true
+  },
+  {
+    key: 'avartar',
+    name: 'Avartar',
+    width: 60,
+    formatter: ImageFormatter,
+    resizable: true,
+    headerRenderer: <ImageFormatter value={faker.image.cats()} />
+  },
+  {
+    key: 'county',
+    name: 'County',
+    editor: 'autoComplete',
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'title',
+    name: 'Title',
+    editor: 'dropdown',
+    width: 200,
+    resizable: true,
+  },
+  {
+    key: 'firstName',
+    name: 'First Name',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'lastName',
+    name: 'Last Name',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'email',
+    name: 'Email',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'street',
+    name: 'Street',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'zipCode',
+    name: 'ZipCode',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'date',
+    name: 'Date',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'bs',
+    name: 'bs',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'catchPhrase',
+    name: 'Catch Phrase',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'companyName',
+    name: 'Company Name',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'sentence',
+    name: 'Sentence',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'number',
+    name: 'number',
+    editor: 'number',
+    editable: true,
+    width: 200,
+    resizable: true
+  }
+];
+
 class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this._columns = [
-      {
-        key: 'id',
-        name: 'ID',
-        width: 80,
-        resizable: true
-      },
-      {
-        key: 'avartar',
-        name: 'Avartar',
-        width: 60,
-        formatter: ImageFormatter,
-        resizable: true,
-        headerRenderer: <ImageFormatter value={faker.image.cats()} />
-      },
-      {
-        key: 'county',
-        name: 'County',
-        editor: <AutoCompleteEditor options={counties}/>,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'title',
-        name: 'Title',
-        editor: <DropDownEditor options={titles}/>,
-        width: 200,
-        resizable: true,
-        events: {
-          onDoubleClick: function() {
-            console.log('The user double clicked on title column');
-          }
-        }
-      },
-      {
-        key: 'firstName',
-        name: 'First Name',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'lastName',
-        name: 'Last Name',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'email',
-        name: 'Email',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'street',
-        name: 'Street',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'zipCode',
-        name: 'ZipCode',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'date',
-        name: 'Date',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'bs',
-        name: 'bs',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'catchPhrase',
-        name: 'Catch Phrase',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'companyName',
-        name: 'Company Name',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'sentence',
-        name: 'Sentence',
-        editable: true,
-        width: 200,
-        resizable: true
-      }
-    ];
 
     this.state = {
-      columns: this._columns,
+      columns: this.initColumns(),
       rows: this.createRows(20)
     };
+  }
+
+  initColumns = (columns) => {
+    let newColumns = columns || defaultColumns;
+    return newColumns.map(column => {
+      if (column.editor) {
+        let editor = this.createEditor(column.editor);
+        column.editor = editor;
+      }
+      return column;
+    });
+  }
+
+  createEditor = (editorType) => {
+    let editor = null;
+    switch(editorType) {
+      case 'number':
+        // todo optimized
+        editor = <NumberEditor />;
+        break;
+      case 'autoCompelete':
+        // todo optimized
+        editor = <AutoCompleteEditor options={counties} />;
+        break;
+      case 'dropdown':
+        // todo optimized
+        editor = <DropDownEditor options={titles} />;
+        break;
+    }
+    return editor;
   }
 
   createRows = (numberOfRows) => {
@@ -179,7 +216,7 @@ class Example extends React.Component {
 
   createFakeRowObjectData = (index) => {
     return {
-      id: 'id_' + index,
+      name: index,
       avartar: faker.image.avatar(),
       county: faker.address.county(),
       email: faker.internet.email(),
@@ -269,8 +306,28 @@ class Example extends React.Component {
     this.setState({columns: columns});
   }
 
+  onColumnDelete = (e, data) => {
+    let column = data.column;
+    let key = column.key;
+    let columns = this.state.columns.filter(item => item.key !== key);
+    this.setState({
+      columns: columns
+    });
+  }
+
+  onRowDelete = (e, data) => {
+    let { rowIdx } = data;
+    let newRows = this.state.rows.slice(0); // copy array;
+    newRows.splice(rowIdx, 1);
+    this.setState({rows: newRows});
+  }
+
   render() {
     let columns = this.getColumns();
+
+    let headerContextMenu = <HeaderContextMenu id={'header-context-menu'} onColumnDelete={this.onColumnDelete} />
+    let bodyContextMenu = <BodyContextMenu id={'body-context-menu'} onRowDelete={this.onRowDelete}/>
+
     return (
       <ReactDataGrid
         ref={ node => this.grid = node }
@@ -288,6 +345,9 @@ class Example extends React.Component {
         enableInsertRow={true}
         onInsertRow={this.onInsertRow}
         onInsertColumn={this.onInsertColumn}
+        headerContextMenu={headerContextMenu}
+        contextMenu={bodyContextMenu}
+        RowsContainer={ContextMenuTrigger}
       />
     );
   }
@@ -300,3 +360,53 @@ module.exports = exampleWrapper({
   examplePath: './scripts/example13-all-features.js',
   examplePlaygroundLink: undefined
 });
+
+class HeaderContextMenu extends React.Component {
+
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    column: PropTypes.object,
+    onColumnRename: PropTypes.func,
+  }
+
+  onColumnDelete = (e, data) => {
+    if (typeof(this.props.onColumnDelete) === 'function') {
+      this.props.onColumnDelete(e, data);
+    }
+  }
+
+  render() {
+    let { id, column } = this.props;
+
+    return (
+      <ContextMenu id={id}>
+        <MenuItem data={{ column }} onClick={this.onColumnDelete}>Delete</MenuItem>
+      </ContextMenu>
+    );
+  }
+}
+
+class BodyContextMenu extends React.Component {
+  static propTypes = {
+    onRowDelete: PropTypes.func.isRequired,
+    rowIdx: PropTypes.string.isRequired,
+    idx: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  };
+
+  onRowDelete = (e, data) => {
+    if (typeof(this.props.onRowDelete) === 'function') {
+      this.props.onRowDelete(e, data);
+    }
+  };
+
+  render() {
+    const { idx, id, rowIdx } = this.props;
+
+    return (
+      <ContextMenu id={id}>
+        <MenuItem data={{ rowIdx, idx }} onClick={this.onRowDelete}>Delete Row</MenuItem>
+      </ContextMenu>
+    );
+  }
+}

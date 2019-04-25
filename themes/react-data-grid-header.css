@@ -22,6 +22,9 @@
   border-right: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
 }
+.react-grid-HeaderCell:hover {
+  cursor: pointer;
+}
 .react-grid-HeaderCell__value {
   white-space: nowrap;
   text-overflow: ellipsis;

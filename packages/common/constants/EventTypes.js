@@ -1,4 +1,5 @@
 export const SELECT_CELL = 'SELECT_CELL';
+export const SElECT_COLUMN = 'SElECT_COLUMN';
 export const SELECT_START = 'SELECT_START';
 export const SELECT_UPDATE = 'SELECT_UPDATE';
 export const SELECT_END = 'SELECT_END';
