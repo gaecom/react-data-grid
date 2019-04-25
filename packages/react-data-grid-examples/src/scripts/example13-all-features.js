@@ -4,7 +4,7 @@ const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 const { Editors, Toolbar, Formatters } = require('react-data-grid-addons');
 import update from 'immutability-helper';
-const { AutoComplete: AutoCompleteEditor, DropDownEditor } = Editors;
+const { AutoComplete: AutoCompleteEditor, DropDownEditor, NumberEditor } = Editors;
 const { ImageFormatter } = Formatters;
 const { Menu: { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } } = require('react-data-grid-addons');
 
@@ -57,119 +57,153 @@ const counties = [
 
 const titles = ['Dr.', 'Mr.', 'Mrs.', 'Miss', 'Ms.'];
 
+const defaultColumns = [
+  {
+    key: 'name',
+    name: 'Name',
+    width: 80,
+    resizable: true
+  },
+  {
+    key: 'avartar',
+    name: 'Avartar',
+    width: 60,
+    formatter: ImageFormatter,
+    resizable: true,
+    headerRenderer: <ImageFormatter value={faker.image.cats()} />
+  },
+  {
+    key: 'county',
+    name: 'County',
+    editor: 'autoComplete',
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'title',
+    name: 'Title',
+    editor: 'dropdown',
+    width: 200,
+    resizable: true,
+  },
+  {
+    key: 'firstName',
+    name: 'First Name',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'lastName',
+    name: 'Last Name',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'email',
+    name: 'Email',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'street',
+    name: 'Street',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'zipCode',
+    name: 'ZipCode',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'date',
+    name: 'Date',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'bs',
+    name: 'bs',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'catchPhrase',
+    name: 'Catch Phrase',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'companyName',
+    name: 'Company Name',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'sentence',
+    name: 'Sentence',
+    editable: true,
+    width: 200,
+    resizable: true
+  },
+  {
+    key: 'number',
+    name: 'number',
+    editor: 'number',
+    editable: true,
+    width: 200,
+    resizable: true
+  }
+];
+
 class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this._columns = [
-      {
-        key: 'name',
-        name: 'Name',
-        width: 80,
-        resizable: true
-      },
-      {
-        key: 'avartar',
-        name: 'Avartar',
-        width: 60,
-        formatter: ImageFormatter,
-        resizable: true,
-        headerRenderer: <ImageFormatter value={faker.image.cats()} />
-      },
-      {
-        key: 'county',
-        name: 'County',
-        editor: <AutoCompleteEditor options={counties}/>,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'title',
-        name: 'Title',
-        editor: <DropDownEditor options={titles}/>,
-        width: 200,
-        resizable: true,
-        events: {
-          onDoubleClick: function() {
-            console.log('The user double clicked on title column');
-          }
-        }
-      },
-      {
-        key: 'firstName',
-        name: 'First Name',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'lastName',
-        name: 'Last Name',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'email',
-        name: 'Email',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'street',
-        name: 'Street',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'zipCode',
-        name: 'ZipCode',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'date',
-        name: 'Date',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'bs',
-        name: 'bs',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'catchPhrase',
-        name: 'Catch Phrase',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'companyName',
-        name: 'Company Name',
-        editable: true,
-        width: 200,
-        resizable: true
-      },
-      {
-        key: 'sentence',
-        name: 'Sentence',
-        editable: true,
-        width: 200,
-        resizable: true
-      }
-    ];
 
     this.state = {
-      columns: this._columns,
+      columns: this.initColumns(),
       rows: this.createRows(20)
     };
+  }
+
+  initColumns = (columns) => {
+    let newColumns = columns || defaultColumns;
+    return newColumns.map(column => {
+      if (column.editor) {
+        let editor = this.createEditor(column.editor);
+        column.editor = editor;
+      }
+      return column;
+    });
+  }
+
+  createEditor = (editorType) => {
+    let editor = null;
+    switch(editorType) {
+      case 'number':
+        // todo optimized
+        editor = <NumberEditor />;
+        break;
+      case 'autoCompelete':
+        // todo optimized
+        editor = <AutoCompleteEditor options={counties} />;
+        break;
+      case 'dropdown':
+        // todo optimized
+        editor = <DropDownEditor options={titles} />;
+        break;
+    }
+    return editor;
   }
 
   createRows = (numberOfRows) => {
