@@ -1,5 +1,5 @@
 {
-  "name": "react-data-grid",
+  "name": "@seafile/react-data-grid",
   "private": true,
   "description": "Data grid for React",
   "main": "src/index.js",
