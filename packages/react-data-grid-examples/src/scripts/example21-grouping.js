@@ -1,5 +1,5 @@
 const faker = require('faker');
-const ReactDataGrid = require('react-data-grid');
+const ReactDataGrid = require('@seafile/react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 const {
@@ -7,7 +7,7 @@ const {
   Data: { Selectors },
   Draggable: { Container: DraggableContainer },
   Formatters: { ImageFormatter }
-} = require('react-data-grid-addons');
+} = require('@seafile/react-data-grid-addons');
 
 import PropTypes from 'prop-types';
 
@@ -169,7 +169,7 @@ class Example extends React.Component {
     if (isNotInGroups) {
       columnGroups.push({key: activeColumn.key, name: activeColumn.name});
     }
-   
+
     this.setState({groupBy: columnGroups});
   };
 

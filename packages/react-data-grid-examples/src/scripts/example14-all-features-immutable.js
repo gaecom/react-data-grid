@@ -1,4 +1,4 @@
-const ReactDataGrid = require('react-data-grid');
+const ReactDataGrid = require('@seafile/react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 const FakeObjectDataStore = require('./FakeObjectDataStore');
@@ -10,7 +10,7 @@ const {
   Menu:
     { ContextMenu, MenuItem },
   Formatters:
-    { ImageFormatter }} = require('react-data-grid-addons');
+    { ImageFormatter }} = require('@seafile/react-data-grid-addons');
 const faker = require('faker');
 
 import PropTypes from 'prop-types';

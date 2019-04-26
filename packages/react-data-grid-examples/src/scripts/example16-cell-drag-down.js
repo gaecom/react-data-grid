@@ -1,4 +1,4 @@
-const ReactDataGrid = require('react-data-grid');
+const ReactDataGrid = require('@seafile/react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 import update from 'immutability-helper';

@@ -1,4 +1,4 @@
-import ReactDataGrid from 'react-data-grid';
+import ReactDataGrid from '@seafile/react-data-grid';
 import exampleWrapper from '../components/exampleWrapper';
 import React from 'react';
 import {AreaChart, Area} from 'Recharts';

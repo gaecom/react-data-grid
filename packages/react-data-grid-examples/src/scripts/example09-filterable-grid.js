@@ -1,7 +1,7 @@
-const ReactDataGrid = require('react-data-grid');
+const ReactDataGrid = require('@seafile/react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
-import { Toolbar, Data } from 'react-data-grid-addons';
+import { Toolbar, Data } from '@seafile/react-data-grid-addons';
 
 const Selectors = Data.Selectors;
 

@@ -1,7 +1,7 @@
-const ReactDataGrid = require('react-data-grid');
+const ReactDataGrid = require('@seafile/react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
-const { Editors, Formatters } = require('react-data-grid-addons');
+const { Editors, Formatters } = require('@seafile/react-data-grid-addons');
 import update from 'immutability-helper';
 
 const { AutoComplete: AutoCompleteEditor, DropDownEditor } = Editors;
