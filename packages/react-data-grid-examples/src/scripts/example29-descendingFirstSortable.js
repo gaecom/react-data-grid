@@ -1,4 +1,4 @@
-import ReactDataGrid from 'react-data-grid';
+import ReactDataGrid from '@seafile/react-data-grid';
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 

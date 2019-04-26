@@ -1,4 +1,4 @@
-const ReactDataGrid = require('react-data-grid');
+const ReactDataGrid = require('@seafile/react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 
@@ -80,7 +80,7 @@ class Example extends React.Component {
         rowGetter={this.rowGetter}
         rowsCount={this._rows.length}
         minHeight={500}
-        minColumnWidth={120} 
+        minColumnWidth={120}
       />);
   }
 }

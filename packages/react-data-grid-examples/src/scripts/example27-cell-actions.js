@@ -1,11 +1,11 @@
 const faker = require('faker');
-const ReactDataGrid = require('react-data-grid');
+const ReactDataGrid = require('@seafile/react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
 const {
   Data: { Selectors },
   Formatters: { ImageFormatter }
-} = require('react-data-grid-addons');
+} = require('@seafile/react-data-grid-addons');
 
 
 faker.locale = 'en_GB';

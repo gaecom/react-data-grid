@@ -1,9 +1,9 @@
 const React = require('react');
-import ReactDataGrid from 'react-data-grid';
+import ReactDataGrid from '@seafile/react-data-grid';
 const exampleWrapper = require('../components/exampleWrapper');
 const {
   DraggableHeader: { DraggableContainer }
-} = require('react-data-grid-addons');
+} = require('@seafile/react-data-grid-addons');
 
 class Example extends React.Component {
   createRows = () => {
