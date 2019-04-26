@@ -18,6 +18,13 @@ class SimpleHeaderCell extends React.Component {
     }
   }
 
+  onMouseDown = (event) => {
+    event.stopPropagation();
+    if (event.button === 2) {
+      return;
+    }
+  }
+
   onContextMenu = (event) => {
     event.preventDefault();
     if (typeof(this.props.onHeaderContextMenu) === 'function') {
@@ -46,7 +53,7 @@ class SimpleHeaderCell extends React.Component {
 
     return (
       <ContextMenuTrigger id={id}>
-        <div className="widget-HeaderCell__value" onClick={this.onHeaderCellClick} onContextMenu={this.onContextMenu}>
+        <div className="widget-HeaderCell__value" style={{lineHeight: '24px'}} onClick={this.onHeaderCellClick} onMouseDown={this.onMouseDown} onContextMenu={this.onContextMenu}>
           {headerText}
         </div>
       </ContextMenuTrigger>

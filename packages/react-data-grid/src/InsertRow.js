@@ -21,7 +21,7 @@ class InsertRow extends React.Component {
 
   render() {
 
-    const className = joinClasses('react-grid-row', 'react-grid-row-add');
+    const className = joinClasses('react-grid-Row', 'react-grid-row-add');
 
     let style = {
       width: this.props.width,
