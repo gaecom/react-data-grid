@@ -1,3 +1,4 @@
+export const SELECT_NONE = 'SELECT_NONE';
 export const SELECT_CELL = 'SELECT_CELL';
 export const SElECT_COLUMN = 'SElECT_COLUMN';
 export const SELECT_START = 'SELECT_START';

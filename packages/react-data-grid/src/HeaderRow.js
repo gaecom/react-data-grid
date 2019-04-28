@@ -195,6 +195,7 @@ class HeaderRow extends React.Component {
 
   onHeaderContextMenu = (column) => {
     this.setState({column: column});
+    this.props.eventBus.dispatch(EventTypes.SELECT_NONE);
   }
 
   render() {
