@@ -121,6 +121,7 @@ class InteractionMasks extends React.Component {
 
   componentDidMount() {
     const { eventBus, enableCellAutoFocus } = this.props;
+    this.unsubscribeSelectNone = eventBus.subscribe(EventTypes.SELECT_NONE, this.selectNone);
     this.unsubscribeSelectCell = eventBus.subscribe(EventTypes.SELECT_CELL, this.selectCell);
     this.unsubscribeSelectColumn = eventBus.subscribe(EventTypes.SELECT_COLUMN, this.selectColumn);
     this.unsubscribeSelectStart = eventBus.subscribe(EventTypes.SELECT_START, this.onSelectCellRangeStarted);
@@ -134,6 +135,7 @@ class InteractionMasks extends React.Component {
   }
 
   componentWillUnmount() {
+    this.unsubscribeSelectNone();
     this.unsubscribeSelectCell();
     this.unsubscribeSelectColumn();
     this.unsubscribeSelectStart();
@@ -469,6 +471,13 @@ class InteractionMasks extends React.Component {
     const { rowsCount, columns } = this.props;
     this.selectCell({ rowIdx: rowsCount - 1, idx: getSize(columns) - 1 });
   };
+
+  selectNone = () => {
+    this.setState({
+      selectedPosition: {idx: -1, rowIdx: -1},
+      selectedRange: {topLeft: {idx: -1, rowIdx: -1}, bottomRight: {idx: -1, rowIdx: -1}},
+    });
+  }
 
   selectCell = (cell, openEditor) => {
     const callback = openEditor ? this.openEditor : () => null;
