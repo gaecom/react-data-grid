@@ -312,6 +312,10 @@ class ReactDataGrid extends React.Component {
     this.eventBus.dispatch(EventTypes.DRAG_ENTER, { overRowIdx });
   };
 
+  gridHeight = () => {
+    return this.grid ? this.grid.parentElement.offsetHeight : 0;
+  }
+
   gridWidth = () => {
     return this.grid ? this.grid.parentElement.offsetWidth : 0;
   };
@@ -822,6 +826,7 @@ class ReactDataGrid extends React.Component {
     const toolbar = this.renderToolbar();
     let containerWidth = this.props.minWidth || this.gridWidth();
     let gridWidth = containerWidth - this.state.scrollOffset;
+    let minHeight = this.props.minHeight || this.gridHeight();
 
     // depending on the current lifecycle stage, gridWidth() may not initialize correctly
     // this also handles cases where it always returns undefined -- such as when inside a div with display:none
@@ -854,7 +859,7 @@ class ReactDataGrid extends React.Component {
             sortColumn={this.state.sortColumn}
             sortDirection={this.state.sortDirection}
             onSort={this.handleSort}
-            minHeight={this.props.minHeight}
+            minHeight={minHeight}
             totalWidth={gridWidth}
             onViewportKeydown={this.onKeyDown}
             onViewportKeyup={this.onKeyUp}
