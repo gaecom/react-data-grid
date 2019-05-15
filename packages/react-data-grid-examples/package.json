@@ -19,8 +19,6 @@
   "dependencies": {
     "@seafile/react-data-grid": "^6.1.5",
     "immutability-helper": "^2.7.0",
-    "react-data-grid": "^6.0.1",
-    "react-data-grid-addons": "^6.0.1",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
