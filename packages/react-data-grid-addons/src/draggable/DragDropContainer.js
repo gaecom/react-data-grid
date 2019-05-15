@@ -30,7 +30,7 @@ class DraggableContainer extends Component {
     const columns = grid.props.columns;
     const rows = this.getRows(rowsCount, rowGetter);
     return (
-      <div>
+      <div className="drag-drop-container">
         {grid}
         <RowDragLayer
           rowSelection={grid.props.rowSelection}
