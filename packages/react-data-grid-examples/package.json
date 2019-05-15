@@ -1,6 +1,6 @@
 {
   "name": "@seafile/react-data-grid-examples",
-  "version": "6.1.6",
+  "version": "6.1.7",
   "description": "A set of examples for the grid",
   "main": "main.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "@seafile/react-data-grid-addons": "^6.1.6",
+    "@seafile/react-data-grid-addons": "^6.1.7",
     "bootstrap": "^3.2.0",
     "jquery": "^2.1.1",
     "markdown": "^0.5.0",
