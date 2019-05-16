@@ -134,6 +134,7 @@ class HeaderRow extends React.Component {
       width: this.props.minColumnWidth,
       display: 'inine-block',
       fontSize: '24px',
+      lineHeight: '24px',
       textAlign: 'center'
     }
   }
