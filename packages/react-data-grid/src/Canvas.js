@@ -445,15 +445,17 @@ class Canvas extends React.PureComponent {
           editorPortalTarget={this.props.editorPortalTarget}
         />
         <RowsContainer id={contextMenu ? contextMenu.props.id : 'rowsContainer'}>
-          <div style={{ width: totalColumnWidth +  200}}>{rows}</div>
-          {this.props.enableInsertRow && (
-            <InsertRow
-              width={this.props.totalColumnWidth}
-              iconWidth={insertRowIconWidth}
-              height={this.props.rowHeight}
-              onInsertRow={this.props.onInsertRow}
-            />
-          )}
+          <div style={{width: totalColumnWidth + 500}}>
+            <div style={{ width: totalColumnWidth}}>{rows}</div>
+            {this.props.enableInsertRow && (
+              <InsertRow
+                width={this.props.totalColumnWidth}
+                iconWidth={insertRowIconWidth}
+                height={this.props.rowHeight}
+                onInsertRow={this.props.onInsertRow}
+              />
+            )}
+          </div>
         </RowsContainer>
       </div>
     );

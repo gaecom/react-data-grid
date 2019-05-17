@@ -201,7 +201,7 @@ class HeaderRow extends React.Component {
 
   render() {
     const cellsStyle = {
-      width: this.props.width ? (this.props.width + getScrollbarSize() + 200) : '100%',
+      width: this.props.width ? (this.props.width + getScrollbarSize() + 500) : '100%',
       height: this.props.height,
       whiteSpace: 'nowrap',
       overflowX: 'hidden',
