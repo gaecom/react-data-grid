@@ -1,12 +1,12 @@
 const faker = require('faker');
-const ReactDataGrid = require('@seafile/react-data-grid');
+const ReactDataGrid = require('../../../react-data-grid');
 const exampleWrapper = require('../components/exampleWrapper');
 const React = require('react');
-const { Editors, Toolbar, Formatters } = require('@seafile/react-data-grid-addons');
+const { Editors, Toolbar, Formatters } = require('../../../react-data-grid-addons');
 import update from 'immutability-helper';
 const { AutoComplete: AutoCompleteEditor, DropDownEditor, NumberEditor } = Editors;
 const { ImageFormatter } = Formatters;
-const { Menu: { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } } = require('@seafile/react-data-grid-addons');
+const { Menu: { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } } = require('../../../react-data-grid-addons');
 
 import PropTypes from 'prop-types';
 

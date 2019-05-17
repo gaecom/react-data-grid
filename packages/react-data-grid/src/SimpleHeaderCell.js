@@ -44,7 +44,8 @@ class SimpleHeaderCell extends React.Component {
     if (!isSupportHeaderContextMenu) {
       return (
         <div className="widget-HeaderCell__value" onClick={this.onHeaderCellClick}>
-          {headerText}
+          <span className="header-icon"></span>
+          <span className="header-name">{headerText}</span>
         </div>
       );
     }
@@ -52,12 +53,13 @@ class SimpleHeaderCell extends React.Component {
     let id = headerContextMenu.props.id;
 
     return (
-      <ContextMenuTrigger id={id}>
+      <ContextMenuTrigger id={id} attributes={{'className': 'header-cell-container'}}>
         <div className="widget-HeaderCell__value" style={{lineHeight: '24px'}} onClick={this.onHeaderCellClick} onMouseDown={this.onMouseDown} onContextMenu={this.onContextMenu}>
-          {headerText}
+          <span className="header-icon"></span>
+          <span className="header-name">{headerText}</span>
         </div>
       </ContextMenuTrigger>
-    )
+    );
   }
 }
 

@@ -14,7 +14,7 @@ import { CellNavigationMode, EventTypes, UpdateActions, HeaderRowType } from 'co
 import { EventBus } from './masks';
 
 require('../../../themes/react-data-grid-core.css');
-require('../../../themes/react-data-grid-checkbox.css');
+require('../../../themes/react-data-grid-checkbox-new.css');
 
 if (!Object.assign) {
   Object.assign = require('object-assign');
