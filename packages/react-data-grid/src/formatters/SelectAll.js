@@ -12,7 +12,7 @@ const SelectAll = (props) => {
         ref={props.inputRef}
         onChange={props.onChange}
       />
-      <label htmlFor="select-all-checkbox" className="react-grid-checkbox-label"></label>
+      {/* <label htmlFor="select-all-checkbox" className="react-grid-checkbox-label"></label> */}
     </div>
   );
 };

@@ -6,7 +6,7 @@ const { Editors, Toolbar, Formatters } = require('../../../react-data-grid-addon
 import update from 'immutability-helper';
 const { AutoComplete: AutoCompleteEditor, DropDownEditor, NumberEditor } = Editors;
 const { ImageFormatter } = Formatters;
-const { Menu: { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } } = require('@seafile/react-data-grid-addons');
+const { Menu: { ContextMenu, MenuItem, SubMenu, ContextMenuTrigger } } = require('../../../react-data-grid-addons');
 
 import PropTypes from 'prop-types';
 
